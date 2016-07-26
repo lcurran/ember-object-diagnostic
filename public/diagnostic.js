@@ -23,9 +23,10 @@
 //  -  Order 1 : 2 hats ($5 each)
 //  -  Order 2 : 1 desk lamp ($20 each)
 //  -  Order 3 : 3 hand towels ($8 each)
+import Ember from 'ember';
 
 const Order = Ember.Object.extend({
-  orderPrice: Ember.computed('price', 'quantity' function(){
+  orderPrice: Ember.computed('price', 'quantity', function(){
     return this.get('price') * this.get('quantity');
   })
 });
@@ -37,11 +38,11 @@ const Cart = Order.extend({
       this.orders.pushObject(item);
     });
   },
-  totalPrice: Ember.computed({
-    sum = 0;
+  totalPrice: Ember.computed('orders', function(){
+    let sum = 0;
     this.get('orders').forEach((order) => {
       sum += order.get('orderPrice');
-    };
+    });
     return sum;
   })
 });
